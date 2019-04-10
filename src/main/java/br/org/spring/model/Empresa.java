@@ -3,17 +3,23 @@ package br.org.spring.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Empresa")
+@Table(name = "empresa")
 public class Empresa implements Serializable {
 
 	private static final long serialVersionUID = 6547027740716363006L;
@@ -21,13 +27,37 @@ public class Empresa implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@Column(name = "razaoSocial")
+	@Column(name = "razao_social", nullable = false)
 	private String razaoSocial;
+
+	@Column(name = "cnpj", nullable = false)
 	private String cnpj;
-	private LocalDate dataCriacao;
-	private LocalDate dataAtualizao;
+	
+	@Column(name = "data_criacao", nullable = false)
+	private Date dataCriacao;
+	
+	@Column(name = "data_atualizacao", nullable = false)
+	private Date dataAtualizacao;
+	
+	@Column(name = "funcionario", nullable = false)
+	//@OneToMany(mappedBy = "funcionario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Funcionario> funcionarios = new ArrayList<Funcionario>();
 
+	
+	@PreUpdate
+	public void preUpdate() {
+		dataAtualizacao = new Date();
+	}
+	
+	@PrePersist
+	public void prePersist() {
+		final Date atual = new Date();
+		dataCriacao = atual;
+		dataAtualizacao =  atual;
+	}
+	
+	
 	public Empresa() {
 	}
 
@@ -43,12 +73,12 @@ public class Empresa implements Serializable {
 		return cnpj;
 	}
 
-	public LocalDate getDataCriacao() {
+	public Date getDataCriacao() {
 		return dataCriacao;
 	}
 
-	public LocalDate getDataAtualizao() {
-		return dataAtualizao;
+	public Date getDataAtualizao() {
+		return dataAtualizacao;
 	}
 
 	public List<Funcionario> getFuncionarios() {
@@ -60,7 +90,7 @@ public class Empresa implements Serializable {
 	@Override
 	public String toString() {
 		return "Empresa [id=" + id + ", razaoSocial=" + razaoSocial + ", cnpj=" + cnpj + ", dataCriacao=" + dataCriacao
-				+ ", dataAtualizao=" + dataAtualizao + ", funcionarios=" + funcionarios + "]";
+				+ ", dataAtualizao=" + dataAtualizacao + "]";
 	}
 
 	@Override
