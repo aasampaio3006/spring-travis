@@ -20,11 +20,11 @@ public class ApiApplicationTests {
 
 	@Test
 	public void buscaEmpresa() {		
-		Empresa empresa = new Empresa("Novo Digital","1812624900013","30/05/1998");
+		String cnpj = "18126249000103";
 		
 		// when
-	    Empresa found = repository.findByCnpj(empresa.getCnpj());
-		assertTrue(found.getCnpj().equals(empresa.getCnpj()));
+	    Empresa found = repository.findByCnpj(cnpj);
+		assertTrue(found.getCnpj().equals(cnpj));
 		
 		
 		
