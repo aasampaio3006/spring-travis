@@ -20,7 +20,7 @@ public class ApiApplicationTests {
 
 	@Test
 	public void buscaEmpresa() {		
-		Empresa empresa = new Empresa("Novo Digital","18126249000103","30/05/1998");
+		Empresa empresa = new Empresa("Novo Digital","1812624900013","30/05/1998");
 		
 		// when
 	    Empresa found = repository.findByCnpj(empresa.getCnpj());
