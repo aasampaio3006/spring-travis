@@ -1,10 +1,13 @@
 package br.org.api.responses;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Response<T> {
+public class Response<T> implements Serializable {
 
+	private static final long serialVersionUID = 3137810765108784622L;
+	
 	private T data;
 	private List<String> errors;
 
@@ -29,5 +32,12 @@ public class Response<T> {
 	public void setErrors(List<String> errors) {
 		this.errors = errors;
 	}
+
+	@Override
+	public String toString() {
+		return "Response [data=" + data + ", errors=" + errors + "]";
+	}
+	
+	
 
 }

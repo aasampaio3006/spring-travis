@@ -1,6 +1,9 @@
 package br.org.api;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import javax.sql.DataSource;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,9 +28,7 @@ public class ApiApplicationTests {
 		// when
 	    Empresa found = repository.findByCnpj(cnpj);
 		assertTrue(found.getCnpj().equals(cnpj));
-		
-		
-		
+			
 	}
-
+	
 }

@@ -16,18 +16,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.org.api.repository.EmpresaRepository;
 import br.org.api.responses.Response;
+import br.org.api.service.EmpresaService;
 import br.org.model.Empresa;
 
 @RequestMapping(value = "api/v1/empresa")
 @RestController
 public class EmpresaController implements Serializable{
 
-	private static final long serialVersionUID = -4048738025429860056L;
+	private static final long serialVersionUID = 4048738025429860056L;
+	
 	private final Logger logger = LoggerFactory.getLogger(EmpresaController.class);
+	
 	@Autowired
-	private EmpresaRepository repository;
+	private EmpresaService service;
 
 	/**
 	 * GET  /all : get all empressa from database.
@@ -37,7 +39,7 @@ public class EmpresaController implements Serializable{
 	@GetMapping("/all")
 	public List<Empresa> lista() {
 		logger.debug("REST request to get all Empresa");
-		return repository.findAll();
+		return service.findAllEmpresa();
 	}
 	
 	/**
@@ -67,7 +69,7 @@ public class EmpresaController implements Serializable{
 		
 		
 		response.setData(empresa);
-		repository.save(empresa);
+		service.save(empresa);
 		
 		return ResponseEntity.ok(response);
 				
