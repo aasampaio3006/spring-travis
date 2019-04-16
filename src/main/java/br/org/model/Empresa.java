@@ -1,6 +1,7 @@
 package br.org.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import javax.validation.constraints.NotEmpty;
 
@@ -34,13 +35,21 @@ public class Empresa implements Serializable {
 	@NotEmpty(message = "CNPJ não pode ser vazio.")
 	@CNPJ(message = "CNPJ inválido.")
 	private String cnpj;	
-	private String dataCriacao;
+	private LocalDate dataCriacao;
+	private LocalDate dataAtualizcao;
 	
-	public Empresa(String razaoSocial, String cnpj, String dataCriacao) {
+	public Empresa(String razaoSocial, String cnpj) {
 		this.razaoSocial = razaoSocial;
 		this.cnpj = cnpj;
-		this.dataCriacao = dataCriacao;
+		this.dataCriacao = LocalDate.now().minusDays(10);
+		this.dataAtualizcao = LocalDate.now().minusMonths(1);
 	}
+	
+
+	
+	
+	
+	
 	
 	
 

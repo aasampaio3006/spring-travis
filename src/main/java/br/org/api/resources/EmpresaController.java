@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.org.api.responses.Response;
 import br.org.api.service.EmpresaService;
 import br.org.model.Empresa;
+import br.org.model.EmpresaDto;
 
 @RequestMapping(value = "api/v1/empresa")
 @RestController
@@ -57,10 +58,10 @@ public class EmpresaController implements Serializable{
 	 * @return 200 - OK and Empresa created
 	 */
 	@PostMapping
-	public ResponseEntity<Response<Empresa>> create(@Valid @RequestBody Empresa empresa, BindingResult result) {
-		logger.debug("REST request to save Tool : {}", empresa);
+	public ResponseEntity<Response<EmpresaDto>> create(@Valid @RequestBody EmpresaDto empresaDto, BindingResult result) {
+		logger.debug("REST request to save Tool : {}", empresaDto);
 
-		Response<Empresa> response = new Response<Empresa>();
+		Response<EmpresaDto> response = new Response<EmpresaDto>();
 		
 		if (result.hasErrors()) {
 			result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
@@ -68,12 +69,11 @@ public class EmpresaController implements Serializable{
 		}
 		
 		
-		response.setData(empresa);
-		service.save(empresa);
+		response.setData(empresaDto);
+		service.save(empresaDto);
 		
 		return ResponseEntity.ok(response);
 				
-	}
-	
+	}	
 
 }
